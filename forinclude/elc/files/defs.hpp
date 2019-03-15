@@ -9,9 +9,11 @@
 	本文件可能使用了cpp20的新支持或语义，而某些编译器可能并没有支持
 	同时，此项目并没有完成
 */
-//#define use_as_template template<bool=1>
+//#define use_as_template template<bool=true>
 #define often_noexcept
 #define noexcept_as(line) noexcept(noexcept(line))
+
+#define floop while(1)
 
 #define enable_if(...) class enable_state= ::std::enable_if_t<__VA_ARGS__>
 #define enabled_by_default class enable_state=void

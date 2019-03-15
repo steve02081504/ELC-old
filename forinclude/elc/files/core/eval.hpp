@@ -37,7 +37,7 @@ namespace eval_n{
 			arglist=cons(expr,&nil);
 			func=eval_of(expr);
 		}
-		while(1){
+		floop{
 			if(is_elfunc(func)){
 				pop(func);//remove t
 				set_args(car(func),arglist);
@@ -45,7 +45,7 @@ namespace eval_n{
 				safe_ppr aret;
 				safe_ptr&to_eval=arglist; 
 		retry:	try{
-					while(1){
+					floop{
 						to_eval=pop(func);
 						if(is_true(func))[[likely]]{//不是最后一个表达式
 							aret=comn_ppr(eval(to_eval));

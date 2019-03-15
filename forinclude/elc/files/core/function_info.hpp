@@ -30,12 +30,12 @@ struct base_function_info{
 		base_type;
 	static constexpr bool can_destruct=::std::is_destructible_v<base_type>;
 	static constexpr bool can_nothrow_destruct=::std::is_nothrow_destructible_v<base_type>;
-	static constexpr bool can_built=::std::is_function_v<T>?1:
+	static constexpr bool can_built=::std::is_function_v<T>?true:
 			(can_destruct&&
 			((::std::is_rvalue_reference_v<T_>&&::std::is_move_constructible_v<T>)?
-			1:
+			true:
 			::std::is_copy_constructible_v<T>));
-	static constexpr bool can_nothrow_built=::std::is_function_v<T>?1:
+	static constexpr bool can_nothrow_built=::std::is_function_v<T>?true:
 			(can_built&&
 			((::std::is_rvalue_reference_v<T_>&&::std::is_move_constructible_v<T>)?
 			::std::is_nothrow_move_constructible_v<T>:

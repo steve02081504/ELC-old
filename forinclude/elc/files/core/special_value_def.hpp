@@ -128,7 +128,7 @@ inline decltype(node_pool) node_pool;
 //之所以不在node_pool析构时遍历是因为后一ment的node析构时可能访问前一ment的node，而那是早已被释放了的
 inline struct defore_node_pool_destruct_do_t{
 	~defore_node_pool_destruct_do_t()noexcept{
-		t.resize(0);
+		t.resize(zero);
 		t.get_type_ref()=&nil.member;
 		//通过对t的操作达到最大化析构调用
 		#if defined(STEST_ED)

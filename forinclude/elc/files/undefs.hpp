@@ -14,6 +14,8 @@
 #undef often_noexcept
 #undef noexcept_as
 
+#undef floop
+
 #undef enable_if
 #undef enabled_by_default
 #undef disabled_by_default

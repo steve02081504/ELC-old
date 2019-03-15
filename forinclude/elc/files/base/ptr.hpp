@@ -133,7 +133,7 @@ namespace ptr_n::compare_n{
 	template<class T,class T_>
 	class compare_interface_t{
 		typedef convert_interface_t<T> convert_interface;
-		static constexpr bool nothrow_convert_v=::std::is_convertible_v<T_*,same_ptr_p_t<T>*>?1: ::std::is_nothrow_convertible_v<T_,convert_interface>;
+		static constexpr bool nothrow_convert_v=::std::is_convertible_v<T_*,same_ptr_p_t<T>*>?true: ::std::is_nothrow_convertible_v<T_,convert_interface>;
 
 		[[nodiscard]]T*get()const noexcept(nothrow_convert_v){
 			if constexpr(::std::is_convertible_v<T_*,same_ptr_p_t<T>*>)
@@ -234,7 +234,7 @@ namespace ptr_n{
 	private:
 		friend class memory::root_list_t<T>;
 		void do_mark()noexcept{static_cast<safe_ref_able<T>*>(base_t::get())->gc(i_know_what_i_do);}
-		typedef list_n::cons_t<safe_p_t> cons;
+		typedef cons_t<safe_p_t> cons;
 		friend [[nodiscard]]cons*list_n::cons_cast<safe_p_t>(safe_p_t*)noexcept;
 		cons&get_cons_part()noexcept{return*this;}
 		friend [[nodiscard]]safe_p_t*list_n::un_cons_cast<safe_p_t>(cons*)noexcept;
