@@ -1,0 +1,7 @@
+*.layout
+*.exe
+*.o
+*.out
+*.gch
+Makefile.win
+.lexe
