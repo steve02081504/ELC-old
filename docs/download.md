@@ -1,4 +1,6 @@
 # 下载源码包  
+若下载未开始，单击[此处](https://github.com/steve02081504/ELC/archive/master.zip)  
+  
 _______
 
 你还可以：  
