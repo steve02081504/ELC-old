@@ -13,15 +13,12 @@
 class node{
 	safe_ptr rua;
 public:
-	template<class T_=T,typename...args,enable_if(::std::is_invocable_v<core::make_node,args...>)>
-	node(args&&...rest)noexcept(::std::is_nothrow_invocable_v<core::make_node,args...>):
-	rua(core::make_node(::std::forward<args>(rest)...)){}
+	template<class T_=T,typename...args,enable_if(::std::is_invocable_v<make_node,args...>)>
+	node(args&&...rest)noexcept(::std::is_nothrow_invocable_v<make_node,args...>):
+	rua(make_node(::std::forward<args>(rest)...)){}
 	~node()noexcept{rua->destroy();}
 	comn_ptr operator&()noexcept{return rua;}
 	operator core::node&()noexcept{return*rua;}
-
-	using core::setter;
-	using core::ref_setter;
 
 	[[nodiscard]]setter type()noexcept{return setter(rua->type());}
 	[[nodiscard]]setter arec(eluint a)noexcept{return setter(rua->arec(a));}
