@@ -83,7 +83,7 @@ struct zero_t{
 };
 constexpr zero_t zero{};
 
-struct do_your_fucking_delete_t{
+struct do_your_fucking_delete_t{//口吐芬芳.
 	static void operator delete(void*)noexcept{}
 };
 constexpr do_your_fucking_delete_t do_your_fucking_delete{};
