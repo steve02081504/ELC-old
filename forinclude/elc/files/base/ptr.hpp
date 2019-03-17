@@ -115,7 +115,7 @@ namespace ptr_n{
 		template<class T_,enable_if(::std::is_convertible_v<T_,convert_interface>)>
 		base_p_t(T_&&a)noexcept(::std::is_nothrow_convertible_v<T_,convert_interface>):base_p_t(check(static_cast<convert_interface>(::std::forward<T_>(a)).to)){}
 
-		template<enable_if_not_ill_form(::std::declval<T>.destroy())>//for delete
+		template<enable_if_not_ill_form(::std::declval<T>().destroy())>//for delete
 		operator do_your_fucking_delete_t*()noexcept_as(::std::declval<T>.destroy()){
 			(**this).destroy();
 			reset(get_null_p<T>());
