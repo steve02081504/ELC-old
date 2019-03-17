@@ -1,4 +1,5 @@
 //body.hpp
+//at namespace ::
 /*
 未完成的elc解释器string文件
 由steve02081504与Alex0125设计、编写

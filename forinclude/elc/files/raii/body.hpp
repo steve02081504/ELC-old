@@ -1,4 +1,5 @@
 //body.hpp
+//at namespace ::
 /*
 未完成的elc解释器raii文件
 由steve02081504与Alex0125设计、编写
@@ -13,7 +14,8 @@ namespace elc{
 	#include"defs.hpp"
 
 	namespace raii{
-		#include"raii_node.hpp"
+		using namespace base;
+		#include"node.hpp"
 	}
 
 	#include"export.hpp"

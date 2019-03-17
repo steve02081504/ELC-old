@@ -1,4 +1,5 @@
-//raii_node.hpp
+//node.hpp
+//at namespace elc::raii
 /*
 未完成的elc解释器raii文件
 由steve02081504与Alex0125设计、编写
@@ -9,16 +10,19 @@
 	本文件可能使用了cpp20的新支持或语义，而某些编译器可能并没有支持
 	同时，此项目并没有完成
 */
-class raii_node{
+class node{
 	safe_ptr rua;
 public:
-	template<class T_=T,typename...args,enable_if(::std::is_invocable_v<make_node,args...>)>
-	raii_node(args&&...rest)noexcept(::std::is_nothrow_invocable_v<make_node,args...>):
-	rua(make_node(::std::forward<args>(rest)...)){}
-	~raii_node()noexcept{rua->destroy();}
+	template<class T_=T,typename...args,enable_if(::std::is_invocable_v<core::make_node,args...>)>
+	node(args&&...rest)noexcept(::std::is_nothrow_invocable_v<core::make_node,args...>):
+	rua(core::make_node(::std::forward<args>(rest)...)){}
+	~node()noexcept{rua->destroy();}
 	comn_ptr operator&()noexcept{return rua;}
-	operator node&()noexcept{return*rua;}
-	
+	operator core::node&()noexcept{return*rua;}
+
+	using core::setter;
+	using core::ref_setter;
+
 	[[nodiscard]]setter type()noexcept{return setter(rua->type());}
 	[[nodiscard]]setter arec(eluint a)noexcept{return setter(rua->arec(a));}
 	[[nodiscard]]setter nocheck_arec(eluint a)noexcept{return setter(rua->nocheck_arec(a));}

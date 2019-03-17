@@ -1,4 +1,5 @@
 //special_value_def.hpp
+//at namespace elc::core
 /*
 未完成的elc解释器core文件
 由steve02081504与Alex0125设计、编写

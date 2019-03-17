@@ -1,4 +1,5 @@
 //envy.hpp
+//at namespace elc::envy_n
 /*
 未完成的elc解释器envy文件
 由steve02081504与Alex0125设计、编写

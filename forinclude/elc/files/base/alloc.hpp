@@ -1,4 +1,5 @@
 //alloc.hpp
+//at namespace elc::memory
 /*
 未完成的elc解释器base文件
 由steve02081504与Alex0125设计、编写

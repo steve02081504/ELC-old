@@ -1,4 +1,5 @@
 //pools.hpp
+//at namespace elc::core
 /*
 未完成的elc解释器core文件
 由steve02081504与Alex0125设计、编写
@@ -22,4 +23,4 @@ template<typename...args>
 template<typename...args>
 [[nodiscard]]inline comn_ppr make_member(args&&...rest)//{auto a=member_pool.get_new(::std::forward<args>(rest)...);stest_eventlog(a);return a;}/*
 {return comn_ppr(member_pool.get_new(::std::forward<args>(rest)...));}//*/
-//辣鸡cpp20还没有constructing_new_t，所以将就一下
+//辣鸡cpp20

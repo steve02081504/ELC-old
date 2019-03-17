@@ -1,4 +1,5 @@
 //export.hpp
+//at namespace elc
 /*
 未完成的elc解释器function文件
 由steve02081504与Alex0125设计、编写

@@ -1,4 +1,5 @@
 //body.hpp
+//at namespace ::
 /*
 未完成的elc解释器core文件
 由steve02081504与Alex0125设计、编写
@@ -15,7 +16,7 @@ namespace elc{
 	namespace core{
 		using namespace::elc::base;
 		//定义常用别名、声明特殊值
-		#include"transition.hpp"
+		#include"base_decl.hpp"
 		//内存池声明
 		#include"pools.hpp"
 

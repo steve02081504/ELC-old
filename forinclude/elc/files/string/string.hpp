@@ -1,4 +1,5 @@
 //string.hpp
+//at namespace elc::string_n
 /*
 未完成的elc解释器string文件
 由steve02081504与Alex0125设计、编写
