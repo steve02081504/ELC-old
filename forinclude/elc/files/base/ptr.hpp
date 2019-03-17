@@ -107,12 +107,20 @@ namespace ptr_n{
 		base_p_t&operator=(base_p_t&a)&noexcept{reset(a.get());return*this;}
 		base_p_t&operator=(same_ref&&a)&noexcept{swap(a);return*this;}
 		base_p_t&operator=(::std::nullptr_t)&noexcept{reset(get_null_p<T>());return*this;}
+
 		template<class T_,enable_if(::std::is_convertible_v<T_,convert_interface>)>
 		base_p_t&operator=(T_&&a)&noexcept(::std::is_nothrow_convertible_v<T_,convert_interface>){reset(check(static_cast<convert_interface>(::std::forward<T_>(a)).to));return*this;}
 
 
 		template<class T_,enable_if(::std::is_convertible_v<T_,convert_interface>)>
 		base_p_t(T_&&a)noexcept(::std::is_nothrow_convertible_v<T_,convert_interface>):base_p_t(check(static_cast<convert_interface>(::std::forward<T_>(a)).to)){}
+
+		template<enable_if_not_ill_form(::std::declval<T>.destroy())>//for delete
+		operator do_your_fucking_delete_t*()noexcept_as(::std::declval<T>.destroy()){
+			(**this).destroy();
+			reset(get_null_p<T>());
+			return&do_your_fucking_delete;
+		}
 	};
 
 	template<class T,typename ref_type>

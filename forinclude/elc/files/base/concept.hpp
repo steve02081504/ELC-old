@@ -83,6 +83,11 @@ struct zero_t{
 };
 constexpr zero_t zero{};
 
+struct do_your_fucking_delete_t{
+	static void operator delete(void*)noexcept{}
+};
+constexpr do_your_fucking_delete_t do_your_fucking_delete{};
+
 using ::std::byte;
 template<class T>
 [[nodiscard]]inline T&data_cast(byte*p){return*::std::launder(reinterpret_cast<T*>(p));}

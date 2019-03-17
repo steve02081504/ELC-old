@@ -20,7 +20,7 @@
 #undef enabled_by_default
 #undef disabled_by_default
 #undef enable_flag
-//#undef enable_if_not_ill_form
+#undef enable_if_not_ill_form
 
 #undef BREAK_NAMESPACE
 #undef INTER_NAMESPACE 
