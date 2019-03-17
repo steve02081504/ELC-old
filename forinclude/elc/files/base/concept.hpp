@@ -61,8 +61,7 @@ struct non_moveable{
 };
 
 #define defspecflag(name)\
-struct name##_t{};\
-constexpr name##_t name{}
+constexpr struct name##_t{} name{}
 
 defspecflag(do_nothing);
 defspecflag(just_init_flag);
@@ -77,16 +76,14 @@ struct type_pack_t{typedef T type;};
 template<class T>
 constexpr type_pack_t<T> type_pack{};
 
-struct zero_t{
+constexpr struct zero_t{
 	template<class T,enable_if(::std::is_convertible_v<decltype(0),T>)>
 	operator T()const noexcept(::std::is_nothrow_convertible_v<decltype(0),T>){return 0;}
-};
-constexpr zero_t zero{};
+}zero{};
 
-struct do_your_fucking_delete_t{//口吐芬芳.
+constexpr struct do_your_fucking_delete_t{//口吐芬芳.
 	static void operator delete(void*)noexcept{}
-};
-constexpr do_your_fucking_delete_t do_your_fucking_delete{};
+}do_your_fucking_delete{};
 
 using ::std::byte;
 template<class T>

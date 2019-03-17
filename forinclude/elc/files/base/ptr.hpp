@@ -116,7 +116,7 @@ namespace ptr_n{
 		base_p_t(T_&&a)noexcept(::std::is_nothrow_convertible_v<T_,convert_interface>):base_p_t(check(static_cast<convert_interface>(::std::forward<T_>(a)).to)){}
 
 		template<enable_if_not_ill_form(::std::declval<T>().destroy())>//for delete
-		operator do_your_fucking_delete_t*()noexcept_as(::std::declval<T>.destroy()){
+		operator decltype(&do_your_fucking_delete)()noexcept_as(::std::declval<T>().destroy()){
 			(**this).destroy();
 			reset(get_null_p<T>());
 			return&do_your_fucking_delete;
@@ -151,7 +151,7 @@ namespace ptr_n::compare_n{
 		}
 	//friends:
 		friend constexpr bool nothrow_convert<compare_interface_t>()noexcept;
-		friend [[nodiscard]]T*get_p<T,compare_interface_t>(const compare_interface_t&a)noexcept(nothrow_convert<compare_interface_t>());
+		friend T*get_p<T,compare_interface_t>(const compare_interface_t&a)noexcept(nothrow_convert<compare_interface_t>());
 	};
 	template<class T,class T_>
 	[[nodiscard]]inline bool operator!=(const compare_interface_t<T,T_>&a,::std::nullptr_t)
@@ -243,9 +243,9 @@ namespace ptr_n{
 		friend class memory::root_list_t<T>;
 		void do_mark()noexcept{static_cast<safe_ref_able<T>*>(base_t::get())->gc(i_know_what_i_do);}
 		typedef cons_t<safe_p_t> cons;
-		friend [[nodiscard]]cons*list_n::cons_cast<safe_p_t>(safe_p_t*)noexcept;
+		friend cons*list_n::cons_cast<safe_p_t>(safe_p_t*)noexcept;
 		cons&get_cons_part()noexcept{return*this;}
-		friend [[nodiscard]]safe_p_t*list_n::un_cons_cast<safe_p_t>(cons*)noexcept;
+		friend safe_p_t*list_n::un_cons_cast<safe_p_t>(cons*)noexcept;
 		static safe_p_t&cast_from_cons(cons*a)noexcept{return*static_cast<safe_p_t*>(a);}
 	};
 	template<class T>

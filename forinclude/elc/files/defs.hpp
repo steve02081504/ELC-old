@@ -18,7 +18,7 @@
 #define enable_if(...) class enable_state= ::std::enable_if_t<__VA_ARGS__>
 #define enabled_by_default class enable_state=void
 #define disabled_by_default class enable_state= ::std::enable_if_t<false>
-#define enable_if_not_ill_form(...) class enable_state= ::std::void_t<decltype(__VA_ARGS__)>//maybe wrong
+#define enable_if_not_ill_form(...) class enable_state= ::std::void_t<decltype(__VA_ARGS__)>
 #define enable_flag class enable_state
 
 #define INTER_NAMESPACE(NAMESPACENAME) namespace NAMESPACENAME{
