@@ -3,11 +3,6 @@
 
 ____________
 
-近期咸鱼 啥也不想干 基本不更新  
-salted fished,don't want to do anything in the near future and don't update at all.  
-
-____________
-
 #### [点此查看文档](https://steve02081504.github.io/ELC/zh)   
 #### [Click here to view the docs(Chinese)](https://steve02081504.github.io/ELC/zh)  
 这是一个语言解释器雏形，也是一个c++库  
