@@ -37,8 +37,6 @@ namespace ptr_n{
 		void swap(same_ref_p_t&a)noexcept{using std::swap;swap(to,a.to);}
 	};
 
-	template<class T>constexpr T*get_null_p()noexcept;//{return T::null_p;}
-
 	template<class T,typename ref_type>
 	struct ptr_t:same_ref_p_t<T,ref_type>{
 		typedef same_ref_p_t<T,ref_type>same_ref;
@@ -58,11 +56,6 @@ namespace ptr_n{
 
 		void reset(T*a)const noexcept{auto tmp=to;add_ref(to=a);cut_ref(tmp);}
 	};
-
-	template<class T>[[nodiscard]]inline bool bool_converter(T*arg)noexcept{return arg!=get_null_p<T>();}
-	template<class T>[[nodiscard]]inline bool checker(T*)noexcept{return false;}
-
-	template<class T>[[nodiscard]]inline T*check(T*a)noexcept{if(checker(a))return get_null_p<T>();else return a;}
 
 	template<class T>
 	class safe_p_t;

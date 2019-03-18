@@ -11,8 +11,6 @@
 	同时，此项目并没有完成
 */
 namespace array_n{
-	template<class T>
-	inline void initer(T*to)noexcept{if constexpr(!::std::is_trivially_constructible_v<T>)::new(to)T;}
 	template<class T,typename size_type>
 	struct base_array{
 		T*ptr;
@@ -83,7 +81,6 @@ namespace array_n{
 			while(size--)mapper(arec(size));
 		}
 	};
-	template<class T>constexpr T*get_fail_p()noexcept;
 	template<class T,typename size_type=::std::size_t>
 	class circulate_array:base_array<T,size_type>{
 		typedef base_array<T,size_type>base_t;
