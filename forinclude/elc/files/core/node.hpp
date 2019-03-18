@@ -178,6 +178,7 @@ public:
 		base_destory();
 	}
 	virtual constexpr explicit operator bool()noexcept{return true;}
+	constexpr node*operator&()noexcept{return this;}
 };
 
 BREAK_NAMESPACE
