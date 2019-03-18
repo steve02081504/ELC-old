@@ -19,4 +19,5 @@ public:
 	explicit ref_setter(i_know_what_i_do_t,comn_ppr*a,void(*b)(comn_ppr*,comn_ppr)=&default_setter)noexcept:func(b),to(a){}
 	~ref_setter()noexcept=default;
 	void operator=(comn_ppr a)often_noexcept{func(to,a);}
+	void operator=(setter&&a)often_noexcept{operator=(comn_ppr(a));}
 };

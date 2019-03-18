@@ -116,15 +116,15 @@ namespace ptr_n{
 		template<class T_,enable_if(::std::is_convertible_v<T_,convert_interface>)>
 		base_p_t(T_&&a)noexcept(::std::is_nothrow_convertible_v<T_,convert_interface>):base_p_t(check(static_cast<convert_interface>(::std::forward<T_>(a)).to)){}
 
-		/*
-		//会出错,暂时封印.(?)
-		template<enable_if_not_ill_form(::std::declval<T>().destroy())>//for delete
+		//for delete
+		//template<enable_if_not_ill_form(::std::declval<T>().destroy())>
+		//注释掉模板部分使得不会对不完整类型进行检查.
+		//使用不当报错的话也是活该对吧?
 		operator decltype(&do_your_fucking_delete)()noexcept_as(::std::declval<T>().destroy()){
 			(**this).destroy();
 			reset(get_null_p<T>());
 			return&do_your_fucking_delete;
 		}
-		*/
 	};
 
 	template<class T,typename ref_type>

@@ -9,7 +9,7 @@ __________
 - [ ] 解耦合（array）  
 - [ ] 实现（string）  
 - [ ] 实现（expression）  
-- [ ] delete支持（ptr）  
+- [x] delete支持（ptr）  
 - [ ] 文档（中）  
 - [ ] 文档（英）  
 
