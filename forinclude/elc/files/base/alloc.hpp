@@ -11,6 +11,7 @@
 	同时，此项目并没有完成
 */
 using ::std::size_t;
+using ::std::nullptr_t;
 inline void gc()noexcept;
 [[nodiscard]]inline void*alloc(zero_t)noexcept{return nullptr;}
 [[nodiscard]]inline void*alloc(size_t size)noexcept{
@@ -33,9 +34,12 @@ template<class T>
 template<class T>
 [[nodiscard]]inline T*alloc(size_t num=1)noexcept{return::std::assume_aligned<alignof(T)>(reinterpret_cast<T*>(aligned_alloc(alignof(T),sizeof(T)*num)));}
 
+inline void free(nullptr_t)noexcept{}
 void inline free(void*p)noexcept{::std::free(p);}//逼 死强 迫
 //症
+[[nodiscard]]inline void*realloc(nullptr_t,zero_t)noexcept{return nullptr;}
 [[nodiscard]]inline void*realloc(void*ptr,zero_t)noexcept{free(ptr);return nullptr;}
+[[nodiscard]]inline void*realloc(nullptr_t,size_t size)noexcept{return alloc(size);}
 [[nodiscard]]inline void*realloc(void*ptr,size_t nsize)noexcept{
 	if(nsize){
 		void*tmp;
@@ -46,5 +50,6 @@ void inline free(void*p)noexcept{::std::free(p);}//逼 死强 迫
 		return nullptr;
 	}
 }
+
 template<class T>[[nodiscard]]inline T*realloc(T*ptr,zero_t)noexcept{return reinterpret_cast<T*>(realloc(reinterpret_cast<void*>(ptr),zero));}
 template<class T>[[nodiscard]]inline T*realloc(T*ptr,size_t nsize)noexcept{return reinterpret_cast<T*>(realloc(reinterpret_cast<void*>(ptr),nsize));}
