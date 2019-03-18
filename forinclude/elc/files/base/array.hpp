@@ -18,7 +18,7 @@ namespace array_n{
 		explicit base_array(size_type s,T*init)noexcept:ptr(init),size(s){}
 		explicit base_array(do_nothing_t)noexcept{}
 		inline static void construct(T*begin,size_type size)noexcept{
-			while(size--)initer(begin+size);
+			while(size--)type_info<T>::initer(begin+size);
 		}
 		inline static void destory(T*begin,size_type size)noexcept{
 			if constexpr(!::std::is_trivially_destructible_v<T>)while(size--)begin[size].~T();
@@ -92,25 +92,26 @@ namespace array_n{
 		using base_t::build_up;
 		using base_t::ptr;
 		using base_t::size;
+		static constexpr T*fail_p=type_info<T>::fail_p();
 	public:
-		constexpr circulate_array()noexcept:base_t(1,get_fail_p<T>()){}
+		constexpr circulate_array()noexcept:base_t(1,fail_p){}
 		explicit circulate_array(size_type size)noexcept:circulate_array(){if(size)build_up(size);}
 		explicit circulate_array(special_init_t,size_type size,T*init)noexcept:base_t(size,init){}
-		void reset_for_special_init(i_know_what_i_do_t){size=1;ptr=get_fail_p<T>();}
-		~circulate_array()noexcept{if(ptr!=get_fail_p<T>())narrow(zero);}
+		void reset_for_special_init(i_know_what_i_do_t){size=1;ptr=fail_p;}
+		~circulate_array()noexcept{if(ptr!=fail_p)narrow(zero);}
 		[[nodiscard]]T&nocheck_arec(size_type a)noexcept{return ptr[a];}
 		[[nodiscard]]T&arec(size_type a)noexcept{return ptr[a%size];}
 		void resize(zero_t)noexcept{narrow(zero);}
 		void resize(size_type newsize)noexcept{
-			if(ptr==get_fail_p<T>()){if(newsize)build_up(newsize);return;}
+			if(ptr==fail_p){if(newsize)build_up(newsize);return;}
 			if(newsize>size)
 				expand(newsize);
 			else if(newsize<size){
 				narrow(newsize);
-				if(!newsize){ptr=get_fail_p<T>();size=1;}
+				if(!newsize){ptr=fail_p;size=1;}
 			}
 		}
-		[[nodiscard]]size_type get_size()const noexcept{return ptr==get_fail_p<T>()?0:size;}
+		[[nodiscard]]size_type get_size()const noexcept{return ptr==fail_p?0:size;}
 		void for_each(void mapper(T&)noexcept)noexcept{
 			size_type size=get_size();
 			while(size--)mapper(nocheck_arec(size));

@@ -10,14 +10,10 @@
 	本文件可能使用了cpp20的新支持或语义，而某些编译器可能并没有支持
 	同时，此项目并没有完成
 */
-BREAK_NAMESPACE
-template<>inline void base::array_n::initer(core::comn_ppr*)noexcept;
-INTER_NAMESPACE(core)
-
 struct base_node:non_copyable,non_moveable,
 activable_circulate_array<comn_ppr,eluint>,activable_array<byte,eluint>
 {
-	friend [[nodiscard]]bool elc::base::ptr_n::checker<elc::core::node>(elc::core::node*)noexcept;
+	friend base::type_info<core::node>;
 protected:
 	data_t<comn_ppr>type_data;
 private:
@@ -182,13 +178,14 @@ public:
 };
 
 BREAK_NAMESPACE
-template<>inline void base::array_n::initer(core::comn_ppr*a)noexcept{
+template<>inline void base::type_info<core::comn_ppr>::initer(core::comn_ppr*a)noexcept{
 	new(a)core::comn_ppr(core::make_member());
 }
-template<>[[nodiscard]]inline bool base::ptr_n::bool_converter(core::node*a)noexcept{
+
+template<>inline bool base::type_info<core::node>::ptr_to_bool_converter(core::node*a)noexcept{
 	return a->operator bool();
 }
-template<>[[nodiscard]]inline bool base::ptr_n::checker(core::node*a)noexcept{
+template<>inline bool base::type_info<core::node>::ptr_checker(core::node*a)noexcept{
 	return bool(a->destoryed);
 }
 INTER_NAMESPACE(core)

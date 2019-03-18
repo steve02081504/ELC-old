@@ -25,7 +25,7 @@ namespace special_value_n{
 		core::member member;
 		typedef exception_n::fail_error error;
 	private:
-		friend constexpr comn_ppr*array_n::get_fail_p<comn_ppr>()noexcept;
+		friend type_info<comn_ppr>;
 		comn_ppr to_fail_member=&member;
 		struct fail_member_t final:member::base_member{
 			~fail_member_t()noexcept override final=default;

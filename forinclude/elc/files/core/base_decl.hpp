@@ -12,13 +12,24 @@
 */
 class node;//safe_ref_able,weak_ref_able
 BREAK_NAMESPACE
-template<>inline bool base::ptr_n::checker(core::node*)noexcept;
+template<>constexpr bool base::type_info<core::node>::can_destory()noexcept{return true;}
+
+template<>inline bool base::type_info<core::node>::ptr_checker(core::node*)noexcept;
+template<>constexpr core::node* base::type_info<core::node>::null_p()noexcept;
+template<>inline bool base::type_info<core::node>::ptr_to_bool_converter(core::node*)noexcept;
 INTER_NAMESPACE(core)
+
 typedef comn_p_t<node>comn_ptr;
 typedef weak_p_t<node>weak_ptr;
 typedef safe_p_t<node>safe_ptr;
+
 class member;//safe_ref_able
 typedef comn_p_t<member>comn_ppr;
+BREAK_NAMESPACE
+template<>inline void base::type_info<core::comn_ppr>::initer(core::comn_ppr*)noexcept;
+template<>constexpr core::comn_ppr* base::type_info<core::comn_ppr>::fail_p()noexcept;
+INTER_NAMESPACE(core)
+
 typedef safe_p_t<member>safe_ppr;
 
 class setter;

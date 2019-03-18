@@ -81,11 +81,12 @@ template<class T>
 struct type_info{
 	typedef T type;
 	static inline void initer(T*to)noexcept{if constexpr(!::std::is_trivially_constructible_v<T>)::new(to)T;}
+	static constexpr bool can_destory()noexcept{return false;}
 	static constexpr T*fail_p()noexcept;
-	static constexpr T*null_p()noexcept;
-	[[nodiscard]]static inline bool ptr_to_bool_converter(T*arg)noexcept{return arg!=get_null_p<T>();}
+	static constexpr T*null_p()noexcept{return nullptr;}
+	[[nodiscard]]static inline bool ptr_to_bool_converter(T*arg)noexcept{return arg!=null_p();}
 	[[nodiscard]]static inline bool ptr_checker(T*)noexcept{return false;}
-	[[nodiscard]]static inline T*check_ptr(T*a)noexcept{if(ptr_checker(a))return get_null_p<T>();else return a;}
+	[[nodiscard]]static inline T*check_ptr(T*a)noexcept{if(ptr_checker(a))return null_p();else return a;}
 };
 
 constexpr struct zero_t{
