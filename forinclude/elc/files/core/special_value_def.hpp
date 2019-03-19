@@ -25,7 +25,7 @@ namespace special_value_n{
 		core::member member;
 		typedef exception_n::fail_error error;
 	private:
-		friend constexpr comn_ppr*array_n::get_fail_p<comn_ppr>()noexcept;
+		friend type_info<comn_ppr>;
 		comn_ppr to_fail_member=&member;
 		struct fail_member_t final:member::base_member{
 			~fail_member_t()noexcept override final=default;
@@ -147,3 +147,10 @@ inline struct defore_node_pool_destruct_do_t{
 		//无序地对仍然存在的node析构
 	}
 }defore_node_pool_destruct_do;
+
+BREAK_NAMESPACE
+template<>constexpr core::node* base::type_info<core::node>::null_p()noexcept{return&core::nil;}
+template<>constexpr core::member* base::type_info<core::member>::null_p()noexcept{return&core::nil.member;}
+
+template<>constexpr core::comn_ppr* base::type_info<core::comn_ppr>::fail_p()noexcept{return&core::fail.to_fail_member;}
+INTER_NAMESPACE(core)

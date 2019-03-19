@@ -37,8 +37,6 @@ namespace ptr_n{
 		void swap(same_ref_p_t&a)noexcept{using std::swap;swap(to,a.to);}
 	};
 
-	template<class T>constexpr T*get_null_p()noexcept;//{return T::null_p;}
-
 	template<class T,typename ref_type>
 	struct ptr_t:same_ref_p_t<T,ref_type>{
 		typedef same_ref_p_t<T,ref_type>same_ref;
@@ -48,26 +46,30 @@ namespace ptr_n{
 		using same_ref::swap;
 		using same_ptr::to;
 
+		static constexpr T*null_p=type_info<T>::null_p();
+
 		explicit ptr_t(T*a,special_init_t)noexcept:same_ref(a){}
 		ptr_t(T*a)noexcept:same_ref(a){add_ref();}
 		ptr_t(const same_ptr&a)noexcept:same_ref(a){add_ref();}
 		ptr_t(ptr_t&a)noexcept:ptr_t((same_ptr&)a){}
 		ptr_t(ptr_t&&a)noexcept:ptr_t((same_ptr&)a){}
-		ptr_t(::std::nullptr_t=nullptr)noexcept:ptr_t(get_null_p<T>()){}
+		ptr_t(::std::nullptr_t=nullptr)noexcept:ptr_t(null_p){}
 		~ptr_t()noexcept{cut_ref();}
 
 		void reset(T*a)const noexcept{auto tmp=to;add_ref(to=a);cut_ref(tmp);}
 	};
 
-	template<class T>[[nodiscard]]inline bool bool_converter(T*arg)noexcept{return arg!=get_null_p<T>();}
-	template<class T>[[nodiscard]]inline bool checker(T*)noexcept{return false;}
-
-	template<class T>[[nodiscard]]inline T*check(T*a)noexcept{if(checker(a))return get_null_p<T>();else return a;}
-
 	template<class T>
 	class safe_p_t;
 	template<class T>
 	using convert_interface_t=ptr_t<::std::remove_cvref_t<T>,ref_able<::std::remove_cvref_t<T>>>;
+
+	template<class T>
+	inline T*check(T*a)noexcept{return type_info<T>::check_ptr(a);}
+	template<class T>
+	inline bool checker(T*a)noexcept{return type_info<T>::ptr_checker(a);}
+	template<class T>
+	inline bool bool_converter(T*a)noexcept{return type_info<T>::ptr_to_bool_converter(a);}
 
 	namespace compare_n{
 		template<class T,class T_>
@@ -84,6 +86,7 @@ namespace ptr_n{
 		using typename base_t::same_ref;
 		using typename base_t::same_ptr;
 		using base_t::reset;
+		using base_t::null_p;
 		using same_ref::swap;
 		using same_ptr::to;
 		using base_t::base_t;
@@ -93,8 +96,8 @@ namespace ptr_n{
 
 		[[nodiscard]]T*get()const noexcept{
 			if(checker(to))[[unlikely]]{
-				reset(get_null_p<T>());
-				return get_null_p<T>();
+				reset(null_p);
+				return null_p;
 			}else[[likely]]return to;
 		}
 
@@ -107,7 +110,7 @@ namespace ptr_n{
 		base_p_t&operator=(const same_ptr&a)&noexcept{reset(a.to);return*this;}
 		base_p_t&operator=(base_p_t&a)&noexcept{reset(a.get());return*this;}
 		base_p_t&operator=(same_ref&&a)&noexcept{swap(a);return*this;}
-		base_p_t&operator=(::std::nullptr_t)&noexcept{reset(get_null_p<T>());return*this;}
+		base_p_t&operator=(::std::nullptr_t)&noexcept{reset(null_p);return*this;}
 
 		template<class T_,enable_if(::std::is_convertible_v<T_,convert_interface>)>
 		base_p_t&operator=(T_&&a)&noexcept(::std::is_nothrow_convertible_v<T_,convert_interface>){reset(check(static_cast<convert_interface>(::std::forward<T_>(a)).to));return*this;}
@@ -118,11 +121,10 @@ namespace ptr_n{
 
 		//for delete
 		//template<enable_if_not_ill_form(::std::declval<T>().destroy())>
-		//注释掉模板部分使得不会对不完整类型进行检查.
-		//使用不当报错的话也是活该对吧?
+		template<enable_if(type_info<T>::can_destory())>
 		operator decltype(&do_your_fucking_delete)()noexcept_as(::std::declval<T>().destroy()){
 			(**this).destroy();
-			reset(get_null_p<T>());
+			reset(null_p);
 			return&do_your_fucking_delete;
 		}
 	};
