@@ -120,10 +120,4 @@ inline comn_ptr member::make_virtual(safe_ptr to){
 	return to;
 }
 
-BREAK_NAMESPACE
-template<>constexpr core::comn_ppr*base::array_n::get_fail_p<core::comn_ppr>()noexcept{return&core::fail.to_fail_member;}
-template<>constexpr core::node*base::ptr_n::get_null_p<core::node>()noexcept{return&core::nil;}
-template<>constexpr core::member*base::ptr_n::get_null_p<core::member>()noexcept{return&core::nil.member;}
-INTER_NAMESPACE(core)
-
 inline void member::gc_method()noexcept{call_gc(*get()->get_crude_value());}

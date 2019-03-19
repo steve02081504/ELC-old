@@ -24,6 +24,10 @@ typedef weak_p_t<node>weak_ptr;
 typedef safe_p_t<node>safe_ptr;
 
 class member;//safe_ref_able
+BREAK_NAMESPACE
+template<>constexpr core::member* base::type_info<core::member>::null_p()noexcept;
+INTER_NAMESPACE(core)
+
 typedef comn_p_t<member>comn_ppr;
 BREAK_NAMESPACE
 template<>inline void base::type_info<core::comn_ppr>::initer(core::comn_ppr*)noexcept;

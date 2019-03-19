@@ -46,12 +46,14 @@ namespace ptr_n{
 		using same_ref::swap;
 		using same_ptr::to;
 
+		static constexpr T*null_p=type_info<T>::null_p();
+
 		explicit ptr_t(T*a,special_init_t)noexcept:same_ref(a){}
 		ptr_t(T*a)noexcept:same_ref(a){add_ref();}
 		ptr_t(const same_ptr&a)noexcept:same_ref(a){add_ref();}
 		ptr_t(ptr_t&a)noexcept:ptr_t((same_ptr&)a){}
 		ptr_t(ptr_t&&a)noexcept:ptr_t((same_ptr&)a){}
-		ptr_t(::std::nullptr_t=nullptr)noexcept:ptr_t(type_info<T>::null_p()){}
+		ptr_t(::std::nullptr_t=nullptr)noexcept:ptr_t(null_p){}
 		~ptr_t()noexcept{cut_ref();}
 
 		void reset(T*a)const noexcept{auto tmp=to;add_ref(to=a);cut_ref(tmp);}
@@ -61,6 +63,13 @@ namespace ptr_n{
 	class safe_p_t;
 	template<class T>
 	using convert_interface_t=ptr_t<::std::remove_cvref_t<T>,ref_able<::std::remove_cvref_t<T>>>;
+
+	template<class T>
+	inline T*check(T*a)noexcept{return type_info<T>::check_ptr(a);}
+	template<class T>
+	inline bool checker(T*a)noexcept{return type_info<T>::ptr_checker(a);}
+	template<class T>
+	inline bool bool_converter(T*a)noexcept{return type_info<T>::ptr_to_bool_converter(a);}
 
 	namespace compare_n{
 		template<class T,class T_>
@@ -77,17 +86,16 @@ namespace ptr_n{
 		using typename base_t::same_ref;
 		using typename base_t::same_ptr;
 		using base_t::reset;
+		using base_t::null_p;
 		using same_ref::swap;
 		using same_ptr::to;
 		using base_t::base_t;
-
-		static constexpr T*null_p=type_info<T>::null_p();
 
 		base_p_t(base_p_t&a)noexcept:base_t(a){}
 		base_p_t(base_p_t&&a)noexcept:base_t(::std::move(a)){}
 
 		[[nodiscard]]T*get()const noexcept{
-			if(type_info<T>::ptr_checker(to))[[unlikely]]{
+			if(checker(to))[[unlikely]]{
 				reset(null_p);
 				return null_p;
 			}else[[likely]]return to;
@@ -95,7 +103,7 @@ namespace ptr_n{
 
 		T*operator->()const noexcept{return get();}
 		[[nodiscard]]T&operator*()const noexcept{return*get();}
-		[[nodiscard]]explicit operator bool()const noexcept{return type_info<T>::ptr_to_bool_converter(get());}
+		[[nodiscard]]explicit operator bool()const noexcept{return bool_converter(get());}
 		[[nodiscard]]explicit operator T*()const noexcept{return get();}
 
 		base_p_t&operator=(T*a)&noexcept{reset(a);return*this;}
@@ -105,7 +113,7 @@ namespace ptr_n{
 		base_p_t&operator=(::std::nullptr_t)&noexcept{reset(null_p);return*this;}
 
 		template<class T_,enable_if(::std::is_convertible_v<T_,convert_interface>)>
-		base_p_t&operator=(T_&&a)&noexcept(::std::is_nothrow_convertible_v<T_,convert_interface>){reset(type_info<T>::check_ptr(static_cast<convert_interface>(::std::forward<T_>(a)).to));return*this;}
+		base_p_t&operator=(T_&&a)&noexcept(::std::is_nothrow_convertible_v<T_,convert_interface>){reset(check(static_cast<convert_interface>(::std::forward<T_>(a)).to));return*this;}
 
 
 		template<class T_,enable_if(::std::is_convertible_v<T_,convert_interface>)>
@@ -143,9 +151,9 @@ namespace ptr_n::compare_n{
 
 		[[nodiscard]]T*get()const noexcept(nothrow_convert_v){
 			if constexpr(::std::is_convertible_v<T_*,same_ptr_p_t<T>*>)
-				return type_info<T>::check_ptr(static_cast<same_ptr_p_t<T>*>(static_cast<T_*>(const_cast<compare_interface_t*>(this)))->get());
+				return check(static_cast<same_ptr_p_t<T>*>(static_cast<T_*>(const_cast<compare_interface_t*>(this)))->get());
 			else
-				return type_info<T>::check_ptr(static_cast<convert_interface>(*static_cast<T_*>(const_cast<compare_interface_t*>(this))).get());
+				return check(static_cast<convert_interface>(*static_cast<T_*>(const_cast<compare_interface_t*>(this))).get());
 		}
 	//friends:
 		friend constexpr bool nothrow_convert<compare_interface_t>()noexcept;
@@ -171,7 +179,7 @@ namespace ptr_n::compare_n{
 	template<class T,class T_,class T__,enable_if(::std::is_convertible_v<T__,T*>)>
 	[[nodiscard]]inline bool operator==(const compare_interface_t<T,T_>&a,const T__&b)
 	noexcept(nothrow_convert<compare_interface_t<T,T_>>()&&::std::is_nothrow_convertible_v<T__,T*>)
-	{return get_p<T>(a)==type_info<T>::check_ptr(static_cast<T*>(b));}
+	{return get_p<T>(a)==check(static_cast<T*>(b));}
 	template<class T,class T_,class T__,enable_if(::std::is_convertible_v<T__,T*>)>
 	[[nodiscard]]inline bool operator!=(const compare_interface_t<T,T_>&a,const T__&b)
 	noexcept(nothrow_convert<compare_interface_t<T,T_>>()&&::std::is_nothrow_convertible_v<T__,T*>)
