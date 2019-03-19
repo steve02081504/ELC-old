@@ -10,3 +10,8 @@
 	本文件可能使用了cpp20的新支持或语义，而某些编译器可能并没有支持
 	同时，此项目并没有完成
 */
+template<class T,typename size_type=::std::size_t>
+class string{
+	typedef string_data<T,size_type> data_type;
+	comn_ptr<data_type> to;
+}
