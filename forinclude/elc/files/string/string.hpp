@@ -18,4 +18,8 @@ class string{
 	bool unique()noexcept{return to->link_num()==1;}
 public:
 	
+	T&arec(size_type a)noexcept{return to->arec(a);}
+	T&operator[](size_type a)noexcept{return (*to)[a];}
+
+	
 }
