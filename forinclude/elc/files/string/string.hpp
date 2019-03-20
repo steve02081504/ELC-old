@@ -13,5 +13,9 @@
 template<class T,typename size_type=::std::size_t>
 class string{
 	typedef string_data<T,size_type> data_type;
+
 	comn_ptr<data_type> to;
+	bool unique()noexcept{return to->link_num()==1;}
+public:
+	
 }

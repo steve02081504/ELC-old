@@ -12,10 +12,11 @@
 */
 struct envy_t:non_copyable,non_moveable{
 	constexpr envy_t(i_know_what_i_do_t)noexcept{}
-	operator comn_ptr::convert_interface(){return make_node();}
-	operator comn_ppr::convert_interface(){return make_member();}
+	[[nodiscard]]operator comn_ptr::convert_interface(){return make_node();}
+	[[nodiscard]]operator comn_ppr::convert_interface(){return make_member();}
 	template<class T,enable_if(::std::is_constructible_v<T>)>
 	[[nodiscard]]inline operator T()const noexcept(::std::is_nothrow_constructible_v<T>){return T();}
+	void operator&()noexcept{}
 };
 template<class T,class T_>[[nodiscard]]constexpr bool operator!=(T&&,T_&&)noexcept{return true;}
 template<class T,class T_>[[nodiscard]]constexpr bool operator==(T&&,T_&&)noexcept{return false;}

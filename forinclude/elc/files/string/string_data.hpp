@@ -12,5 +12,7 @@
 */
 template<class T,typename size_type=::std::size_t>
 struct string_data:ref_able<string_data<T,size_type>>,array<T,size_type>{
-
+	typedef array<T,size_type> base_t;
+	using base_t::arec;
+	T&operator[](size_type a)noexcept{return arec(a);}
 }
