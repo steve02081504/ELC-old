@@ -5,11 +5,11 @@ __________
 
 ### 近期事件  
 
-- [x] 解耦合（ptr）  
-- [x] 解耦合（array）  
+- [ ] 充实（[memory-tools](forinclude/elc/files/base/memtools.hpp)）  
 - [ ] 实现（string）  
 - [ ] 实现（expression）  
 - [ ] 实现（eval函数层面退出事件机制）  
+- [ ] 文档（基础部件）  
 - [ ] 文档（中）  
 - [ ] 文档（英）  
 
