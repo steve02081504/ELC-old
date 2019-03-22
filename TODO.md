@@ -6,9 +6,9 @@ __________
 ### 近期事件  
 
 - [ ] 充实（[memory-tools](forinclude/elc/files/base/memtools.hpp)）  
-- [ ] 实现（string）  
-- [ ] 实现（expression）  
-- [ ] 实现（eval函数层面退出事件机制）  
+- [ ] 实现（[string](forinclude/elc/files/string)）  
+- [ ] 实现（[expression](forinclude/elc/files/expression)）  
+- [ ] 实现（[eval函数](forinclude/elc/files/core/eval.hpp)层面退出事件机制）  
 - [ ] 文档（基础部件）  
 - [ ] 文档（中）  
 - [ ] 文档（英）  
