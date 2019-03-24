@@ -22,7 +22,7 @@ namespace elc{
 	namespace memory{
 		using namespace base;
 		#include"alloc.hpp"//分配包装函数
-		#include"memtools.hpp"//内存操作工具
+		//#include"memtools.hpp"//内存操作工具
 		#include"pool.hpp"//内存池
 	}
 	namespace base{

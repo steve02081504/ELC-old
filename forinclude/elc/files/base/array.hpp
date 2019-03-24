@@ -42,12 +42,14 @@ namespace array_n{
 			ptr=memory::alloc<T>(newsize);
 			construct(ptr,size=newsize);
 		}
+		/*//待内存工具完善后解禁
 		template<enable_if(::std::is_copy_constructible_v<T>)>
 		void copy(base_array&a)noexcept(::std::is_nothrow_copy_constructible_v<T>){
 			narrow(zero);
 			size=a.size;
 			ptr=memory::copy_construct(memory::alloc<T>(size),a.ptr,sizeof(T)*size);
 		}
+		*/
 	};
 	template<class T,typename size_type=::std::size_t>
 	class array:base_array<T,size_type>{
