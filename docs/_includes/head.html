@@ -1,0 +1,19 @@
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="ELC项目文档">
+    <meta name="keywords"  content="ELC">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="{% if page.title %}{{ page.title }} - {% endif %}ELC docs">
+
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="ELC doc{% if page.title %} of {{ page.title }}{% endif %}">
+
+    <meta property="og:site_name" content="ELC docs">
+    
+    <title>ELC doc{% if page.title %} of {{ page.title }}{% endif %}</title>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+</head>
