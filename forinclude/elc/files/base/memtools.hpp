@@ -1,5 +1,5 @@
 //memtools.hpp
-//at namespace elc::memory
+//at namespace elc::base
 /*
 未完成的elc解释器base文件
 由steve02081504与Alex0125设计、编写
@@ -10,6 +10,18 @@
 	本文件可能使用了cpp20的新支持或语义，而某些编译器可能并没有支持
 	同时，此项目并没有完成
 */
+class copy_t;
+class construct_t;
+class move_t;
+class destory_t;
+class copy_construct_t;
+class move_construct_t;
+
+constexpr struct copy_construct_t{
+	template<class T>
+	constexpr bool nothrow=::std::is_nothrow_copy_constructible_v<T>;
+}copy_construct{};
+
 template<class T>
 inline T*copy_construct(T*to,const T*,zero_t)noexcept{return to;}
 template<class T>
