@@ -52,4 +52,4 @@ void inline free(void*p)noexcept{::std::free(p);}//逼 死强 迫
 }
 
 template<class T>[[nodiscard]]inline T*realloc(T*ptr,zero_t)noexcept{return reinterpret_cast<T*>(realloc(reinterpret_cast<void*>(ptr),zero));}
-template<class T>[[nodiscard]]inline T*realloc(T*ptr,size_t nsize)noexcept{return reinterpret_cast<T*>(realloc(reinterpret_cast<void*>(ptr),nsize));}
+template<class T>[[nodiscard]]inline T*realloc(T*ptr,size_t nsize)noexcept{return reinterpret_cast<T*>(realloc(reinterpret_cast<void*>(ptr),sizeof(T)*nsize));}
