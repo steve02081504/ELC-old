@@ -30,11 +30,11 @@ namespace array_n{
 		}
 		void narrow(size_type newsize)noexcept{
 			destory(ptr+newsize,size-newsize);
-			ptr=memory::realloc(ptr,sizeof(T)*newsize);
+			ptr=memory::realloc(ptr,newsize);
 			size=newsize;
 		}
 		void expand(size_type newsize)noexcept{
-			ptr=memory::realloc(ptr,sizeof(T)*newsize);
+			ptr=memory::realloc(ptr,newsize);
 			construct(ptr+size,newsize-size);
 			size=newsize;
 		}
@@ -47,7 +47,7 @@ namespace array_n{
 		void copy(base_array&a)noexcept(::std::is_nothrow_copy_constructible_v<T>){
 			narrow(zero);
 			size=a.size;
-			ptr=memory::copy_construct(memory::alloc<T>(size),a.ptr,sizeof(T)*size);
+			ptr=memory::copy_construct(memory::alloc<T>(size),a.ptr,size);
 		}
 		*/
 	};
