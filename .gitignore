@@ -4,4 +4,4 @@
 *.out
 *.gch
 Makefile.win
-.lexe
+*.lexe
